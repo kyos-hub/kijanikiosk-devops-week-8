@@ -1,36 +1,34 @@
 # Demo Script — For Nia to Read Aloud
 
-> ⚠️ Fill in [ROLLBACK_TIME] with the exact duration from `rollback-evidence.txt` before this is finalized. It must match exactly.
-
 ---
 
 **[Screen shows the current live site, version 1.3 in the corner]**
 
-"Right now, you're looking at our live payments page. This is what customers see today."
+"You're looking at our live payments page — this is what customers see right now."
 
-**[Presenter/engineer starts the deployment in the background]**
+**[Deployment starts in the background]**
 
-"We're now deploying a brand-new version of this service. Nothing changes for customers yet — this new version is running quietly, side by side with the old one."
+"We're deploying a new version behind the scenes. Customers won't notice a thing yet — it's running quietly, side by side with the current one."
 
-**[Screen shows traffic switching to the new version]**
+**[Traffic switches to the new version]**
 
-"Now we flip the switch. Traffic moves over to the new version. Customers are now using it, live."
+"Now we flip the switch. Customers are live on the new version."
 
 **[A problem is deliberately introduced]**
 
-"To prove this system can protect us, we're going to break the new version on purpose — simulating the kind of bug that sometimes slips through testing."
+"To prove this system protects us, we're going to break the new version on purpose — the kind of bug that sometimes slips through testing."
 
-**[Screen shows the system detecting the failure and switching back]**
+**[System detects the failure and switches back]**
 
-"Watch the screen. The system is checking the new version's health, continuously. The moment it sees a problem, it doesn't wait for a person to notice. It switches customers back to the last known-good version automatically."
+"Watch the screen. The system is checking the new version's health continuously. The moment it sees a problem, it doesn't wait for a person to notice — it switches customers straight back to the last known-good version, automatically."
 
 **[Rollback completes]**
 
-"The system detected the problem and restored normal service in [ROLLBACK_TIME], faster than anyone in this room could have opened a laptop."
+"The system detected the problem and restored normal service in 14 seconds — faster than anyone in this room could have opened a laptop."
 
 **[Closing]**
 
-"This means a bad release can no longer sit in front of customers for minutes while someone figures out what's wrong. It fixes itself, and it does it faster than any manual process we've had before."
+"A bad release can no longer sit in front of customers for minutes while someone figures out what's wrong. It fixes itself, faster than any manual process we've had before."
 
 ---
-*Word count check: keep spoken sections under 250 words total. No acronyms in spoken lines — all technical terms stay in the bracketed stage directions.*
+*Spoken word count: under 250. No acronyms in spoken lines — technical terms stay in bracketed stage directions.*

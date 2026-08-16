@@ -1,0 +1,18 @@
+=== Version tag computation (scripted, not hardcoded) ===
+VERSION=$(node -p "require('./deployment-pipeline/containers/package.json').version")
+GITSHA=$(git rev-parse --short=7 HEAD)
+TAG="${VERSION}-${GITSHA}"
+
+Result: VERSION=1.4.0, GITSHA=7a8c8f2, TAG=1.4.0-7a8c8f2
+
+=== Registry approach ===
+Using `minikube image load` per Challenge F (acceptable for a lab environment;
+no external registry was provisioned for this exercise).
+
+--- loading image into minikube ---
+Image load complete
+--- confirming image is present inside minikube ---
+kijani-registry.local/kijani/kk-payments:1.4.0-7a8c8f2
+--- deleting local docker image to prove minikube is the source of truth ---
+--- re-confirming image still present inside minikube after local deletion ---
+kijani-registry.local/kijani/kk-payments:1.4.0-7a8c8f2

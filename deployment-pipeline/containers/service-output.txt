@@ -1,0 +1,10 @@
+=== service ===
+NAME                  TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+kk-payments-service   NodePort   10.101.46.19   <none>        3001:30001/TCP   2m57s
+=== endpoints ===
+NAME                  ENDPOINTS                         AGE
+kk-payments-service   10.244.0.6:3000,10.244.0.7:3000   2m57s
+=== external access via NodePort ===
+{"status":"ok","version":"v1.4.0","pid":1}
+=== in-cluster DNS check ===
+{"status":"ok","version":"v1.4.0","pid":1}
