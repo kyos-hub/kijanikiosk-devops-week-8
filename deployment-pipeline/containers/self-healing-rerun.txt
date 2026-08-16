@@ -1,0 +1,14 @@
+T0 (pod deletion): 2026-08-16T12:38:30Z
+--- watching for replacement ---
+--- final state ---
+NAME                           READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+kk-payments-6d4d8f97b9-dklt6   1/1     Running   0          2m37s   10.244.0.4   minikube   <none>           <none>
+kk-payments-6d4d8f97b9-lm8nc   1/1     Running   0          61s     10.244.0.5   minikube   <none>           <none>
+T1 (check time): 2026-08-16T12:39:31Z
+
+--- summary ---
+T0 (pod kk-payments-6d4d8f97b9-8zmpx deleted): 2026-08-16T12:38:30Z
+New pod (kk-payments-6d4d8f97b9-lm8nc) reached Running: ~2026-08-16T12:38:30Z (age 61s at 12:39:31 check)
+Recovery time: replacement scheduled and running within seconds of deletion — Kubernetes
+replaced the deleted Pod automatically with no manual intervention.
+Pod name differs from all earlier evidence in this submission (fresh deployment, today's run).
