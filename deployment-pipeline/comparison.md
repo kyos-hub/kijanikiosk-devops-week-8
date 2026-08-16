@@ -20,3 +20,10 @@ Both approaches share the same underlying idea: don't wait for a human to catch 
 In our testing, a deleted service copy was automatically replaced and back to serving traffic in [SELF_HEALING_TIME] — with no manual restart. Separately, packaging the application efficiently — stripping out build tools and unnecessary files — cut the image size by [IMAGE_SIZE_REDUCTION] compared to a naive, single-stage build. Smaller packages start faster and move through our systems more quickly.
 
 What the container approach does not yet solve is *coordinated* recovery across many copies at once, and it does not yet manage configuration or secrets cleanly — right now, some values that should be adjustable per environment are still fixed inside the deployment files themselves. The next phase of this work introduces proper orchestration controls that let the system make smarter decisions about when a copy is truly ready to take traffic, and gives us a safer way to manage sensitive configuration without hardcoding it. Together, the two approaches give us layered protection: one guards against bad releases, the other guards against infrastructure failure, and the next phase closes the remaining gaps between them.
+
+
+## Status
+- Blue/green rollback pipeline: docs and scripts complete
+- Container manifests: complete
+- Evidence files (logs, timings): pending real execution on staging/minikube
+
