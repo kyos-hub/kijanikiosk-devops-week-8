@@ -30,7 +30,7 @@
 
 **[Closing]**
 
-"A bad release can no longer sit in front of customers for minutes while someone figures out what's wrong. It fixes itself, faster than any manual process we've had before."
+"From the moment we broke it to the moment customers were back on the good version took 13 seconds. A bad release can no longer sit in front of customers for minutes while someone figures out what's wrong. It fixes itself, faster than any manual process we've had before."
 
 ---
 *Spoken word count: under 250. No acronyms in spoken lines — technical terms stay in bracketed stage directions.*

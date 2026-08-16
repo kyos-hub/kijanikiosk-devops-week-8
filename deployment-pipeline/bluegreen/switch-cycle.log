@@ -1,13 +1,17 @@
-[2026-08-16T12:08:59Z] Starting switch cycle from clean baseline (active=blue, v1.3.0)
-{"status":"ok","version":"v1.3.0","pid":11976}
-[2026-08-16T12:09:00Z] Switching from blue to green
-Pre-switch health check on green: {"status":"ok","version":"v1.4.0","pid":12015}
+[2026-08-16T18:07:57Z] Starting switch cycle from clean baseline (active=blue, v1.3.0)
+{"status":"ok","version":"v1.3.0","pid":1220}
+[2026-08-16T18:07:57Z] Monitor started in separate terminal (pre-switch baseline established before traffic switch)
+[2026-08-16T18:08:00Z] Switching from blue to green
+[2026-08-16T18:08:00Z] Switching from blue to green
+Pre-switch health check on green: {"status":"ok","version":"v1.4.0","pid":1234}
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
  * Reloading nginx configuration nginx
    ...done.
-[2026-08-16T12:09:01Z] Post-switch health check through nginx: {"status":"ok","version":"v1.4.0","pid":12015}
+[2026-08-16T18:08:01Z] Post-switch health check through nginx: {"status":"ok","version":"v1.4.0","pid":1234}
 Switch complete: active=green previous=blue
 --- post-switch verification ---
-{"status":"ok","version":"v1.4.0","pid":12015}
+{"status":"ok","version":"v1.4.0","pid":1234}
 green
 blue
 --- nginx conf now referencing ---
