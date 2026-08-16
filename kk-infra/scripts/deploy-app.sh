@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# deploy-app.sh
-# Starts (or restarts) the blue or green instance of kk-payments as a
-# background process, since this environment has no systemd.
-#
-# Usage: APP_VERSION=v1.4.0 DEPLOY_ENV=green bash deploy-app.sh
 set -euo pipefail
 
 APP_VERSION="${APP_VERSION:?APP_VERSION is required, e.g. v1.4.0}"
@@ -26,7 +21,6 @@ fi
 
 PID_FILE="$RUN_DIR/kk-api-${DEPLOY_ENV}.pid"
 
-# Stop any existing instance for this environment first
 if [ -f "$PID_FILE" ]; then
   OLD_PID="$(cat "$PID_FILE")"
   if kill -0 "$OLD_PID" 2>/dev/null; then
@@ -45,7 +39,6 @@ NEW_PID=$!
 echo "$NEW_PID" > "$PID_FILE"
 sleep 1
 
-# Confirm it actually came up
 if ! kill -0 "$NEW_PID" 2>/dev/null; then
   echo "FAILED: kk-api-${DEPLOY_ENV} did not stay running. Check $LOG_DIR/kk-api-${DEPLOY_ENV}.log" >&2
   exit 1

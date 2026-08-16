@@ -18,9 +18,11 @@ spec:
         - name: kijani-registry-credentials
       containers:
         - name: kk-payments
-          # REPLACE before applying: full registry address + VERSION-GITSHA tag
-          # e.g. myregistry.example.com/kijani/kk-payments:1.4.0-a1b2c3d
-          image: REGISTRY_HOST/kijani/kk-payments:VERSION-GITSHA
+          image: kijani-registry.local/kijani/kk-payments:1.4.0-7a8c8f2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: APP_VERSION
+              value: "v1.4.0"
           ports:
             - containerPort: 3000
           resources:

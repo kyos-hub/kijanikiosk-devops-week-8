@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-# post-deploy-monitor.sh
-# Polls the currently-active environment's health endpoint every 5 seconds.
-# On 3 consecutive failures, automatically triggers a rollback to the
-# previous environment via switch-env.sh — no human action required.
-#
-# Usage: bash post-deploy-monitor.sh 60
-#   (60 = confidence window in seconds; monitor exits clean if no fault
-#    is detected within this window)
 set -euo pipefail
 
 WINDOW_SECONDS="${1:-60}"

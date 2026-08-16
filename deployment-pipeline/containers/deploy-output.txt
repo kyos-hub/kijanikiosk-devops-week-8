@@ -1,0 +1,7 @@
+=== kubectl get pods ===
+NAME                           READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+kk-payments-6d4d8f97b9-8zmpx   1/1     Running   0          63s   10.244.0.3   minikube   <none>           <none>
+kk-payments-6d4d8f97b9-dklt6   1/1     Running   0          63s   10.244.0.4   minikube   <none>           <none>
+=== kubectl get deployment ===
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+kk-payments   2/2     2            2           64s

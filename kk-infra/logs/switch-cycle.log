@@ -1,0 +1,23 @@
+[2026-08-16T12:08:59Z] Starting switch cycle from clean baseline (active=blue, v1.3.0)
+{"status":"ok","version":"v1.3.0","pid":11976}
+[2026-08-16T12:09:00Z] Switching from blue to green
+Pre-switch health check on green: {"status":"ok","version":"v1.4.0","pid":12015}
+ * Reloading nginx configuration nginx
+   ...done.
+[2026-08-16T12:09:01Z] Post-switch health check through nginx: {"status":"ok","version":"v1.4.0","pid":12015}
+Switch complete: active=green previous=blue
+--- post-switch verification ---
+{"status":"ok","version":"v1.4.0","pid":12015}
+green
+blue
+--- nginx conf now referencing ---
+upstream kk_api_active {
+    server 127.0.0.1:3001;
+}
+server {
+    listen 80;
+    location / {
+        proxy_pass http://kk_api_active;
+        proxy_set_header Host $host;
+    }
+}

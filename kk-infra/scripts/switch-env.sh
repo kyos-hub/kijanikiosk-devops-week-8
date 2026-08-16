@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# switch-env.sh
-# Switches nginx traffic to the given environment (blue or green),
-# updates state files, and confirms the switch via a live health check.
-#
-# Usage: sudo bash switch-env.sh green
 set -euo pipefail
 
 TARGET_ENV="${1:?Usage: switch-env.sh <blue|green>}"
@@ -33,7 +28,6 @@ fi
 
 echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] Switching from ${CURRENT_ENV} to ${TARGET_ENV}"
 
-# Confirm the target instance is actually healthy before switching traffic to it
 HEALTH=$(curl -s "http://127.0.0.1:${PORT}/health" || true)
 if [ -z "$HEALTH" ]; then
   echo "ABORT: target environment ${TARGET_ENV} on port ${PORT} is not responding to /health" >&2
@@ -41,12 +35,10 @@ if [ -z "$HEALTH" ]; then
 fi
 echo "Pre-switch health check on ${TARGET_ENV}: $HEALTH"
 
-# Write the new nginx config and reload
-cp "$BASE_DIR/nginx/kijanikiosk-active-env.conf.${TARGET_ENV}" "$NGINX_CONF"
+sudo cp "$BASE_DIR/nginx/kijanikiosk-active-env.conf.${TARGET_ENV}" "$NGINX_CONF"
 sudo nginx -t
-sudo systemctl reload nginx 2>/dev/null || sudo service nginx reload
+sudo service nginx reload
 
-# Update state files
 if [ "$CURRENT_ENV" != "none" ]; then
   echo "$CURRENT_ENV" > "$PREVIOUS_FILE"
 fi
