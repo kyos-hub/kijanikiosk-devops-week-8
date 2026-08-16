@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kk-payments
+  labels:
+    app: kk-payments
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kk-payments
+  template:
+    metadata:
+      labels:
+        app: kk-payments
+    spec:
+      imagePullSecrets:
+        - name: kijani-registry-credentials
+      containers:
+        - name: kk-payments
+          # REPLACE before applying: full registry address + VERSION-GITSHA tag
+          # e.g. myregistry.example.com/kijani/kk-payments:1.4.0-a1b2c3d
+          image: REGISTRY_HOST/kijani/kk-payments:VERSION-GITSHA
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 10
