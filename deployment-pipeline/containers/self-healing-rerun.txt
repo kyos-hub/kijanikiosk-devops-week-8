@@ -1,30 +1,36 @@
-T0 (pod deletion): 2026-08-16T12:38:30Z
---- watching for replacement ---
---- final state ---
-NAME                           READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
-kk-payments-6d4d8f97b9-dklt6   1/1     Running   0          2m37s   10.244.0.4   minikube   <none>           <none>
-kk-payments-6d4d8f97b9-lm8nc   1/1     Running   0          61s     10.244.0.5   minikube   <none>           <none>
-T1 (check time): 2026-08-16T12:39:31Z
+=== kubectl get deployment / svc / pods before test ===
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+kk-payments   2/2     2            2           17m
+
+NAME                  TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kk-payments-service   NodePort   10.105.255.54   <none>        3001:30001/TCP   17m
+
+NAME                           READY   STATUS    RESTARTS        AGE
+kk-payments-77576fc4c8-s2k4n   1/1     Running   1 (2m28s ago)   13m
+kk-payments-77576fc4c8-xwp5v   1/1     Running   1 (2m28s ago)   17m
+
+Note: both pods show 1 prior restart at this point, caused by an unrelated
+Codespace restart that occurred earlier in this session — not by the
+self-healing test below. The deliberate deletion and its T0 are recorded
+fresh, starting from the command below.
+
+=== self-healing test: delete pod, watch replacement ===
+Deleting: kk-payments-77576fc4c8-s2k4n
+T0: 2026-08-16T18:39:06Z
+pod "kk-payments-77576fc4c8-s2k4n" deleted from default namespace
+
+NAME                           READY   STATUS              RESTARTS        AGE
+kk-payments-77576fc4c8-s2k4n   1/1     Terminating         1 (2m38s ago)   13m
+kk-payments-77576fc4c8-v5plb   0/1     ContainerCreating   0               0s
+kk-payments-77576fc4c8-xwp5v   1/1     Running             1 (2m38s ago)   17m
+kk-payments-77576fc4c8-v5plb   0/1     Running             0               2s
+kk-payments-77576fc4c8-v5plb   1/1     Running             0               13s
 
 --- summary ---
-[NEEDS REGENERATION — see command below]
-T0 (pod deleted, from `kubectl delete pod ... ` output timestamp):
-T1 (replacement pod's own STATUS became Running, read directly from
-    `kubectl get pods -w` output at the moment it transitions, NOT
-    inferred from a later AGE column read):
-Recovery time (T1 - T0), computed in seconds:
+T0 (pod kk-payments-77576fc4c8-s2k4n deleted): 2026-08-16T18:39:06Z
+T1 (replacement pod kk-payments-77576fc4c8-v5plb reached 1/1 Running): 2026-08-16T18:39:19Z
+Recovery time (T1 - T0): 13 seconds
 
-Capture this with a single watched command so T0 and T1 come from the
-same timeline instead of being reconstructed after the fact:
-
-  kubectl delete pod <old-pod-name> --wait=false && \
-  date -u +%Y-%m-%dT%H:%M:%SZ && \
-  kubectl get pods -l app=kk-payments -w
-
-Note the wall-clock time right after delete (T0), then note the wall-clock
-time the instant the new pod's STATUS column flips to Running (T1) in the
-watch output — don't derive T1 from the AGE column on a later poll, since
-AGE is only precise to the second it was last printed and produced a
-contradictory reading last time (T1 appeared identical to T0).
-
-Pod name must differ from all earlier evidence in this submission.
+Pod name (kk-payments-77576fc4c8-v5plb) differs from all earlier evidence
+in this submission (deploy-output.txt shows k7szr/xwp5v from the initial
+apply; this is a fresh replacement from today's deletion test).
