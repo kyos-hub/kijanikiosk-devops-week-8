@@ -1,23 +1,26 @@
-[2026-08-16T12:11:34Z] [MONITOR START] Watching green on port 3001, window=60s, poll=5s, threshold=3 consecutive failures
-[2026-08-16T12:12:04Z] [MONITOR WARN] Health check failed (1/3 consecutive)
-[2026-08-16T12:12:09Z] [MONITOR WARN] Health check failed (2/3 consecutive)
-[2026-08-16T12:12:14Z] [MONITOR WARN] Health check failed (3/3 consecutive)
-[MONITOR FAIL] ROLLBACK TRIGGERED at 2026-08-16T12:12:14Z after 3 consecutive failures on green
-[2026-08-16T12:12:14Z] Switching from green to blue
-Pre-switch health check on blue: {"status":"ok","version":"v1.3.0","pid":11976}
+[2026-08-16T18:07:57Z] [MONITOR START] Watching blue on port 3000, window=30s, poll=5s, threshold=3 consecutive failures
+[2026-08-16T18:08:02Z] [MONITOR RETARGET] Active environment changed, now watching green on port 3001
+[2026-08-16T18:08:07Z] [MONITOR WARN] Health check failed (1/3 consecutive)
+[2026-08-16T18:08:12Z] [MONITOR WARN] Health check failed (2/3 consecutive)
+[2026-08-16T18:08:17Z] [MONITOR WARN] Health check failed (3/3 consecutive)
+[MONITOR FAIL] ROLLBACK TRIGGERED at 2026-08-16T18:08:17Z after 3 consecutive failures on green
+[2026-08-16T18:08:17Z] Switching from green to blue
+Pre-switch health check on blue: {"status":"ok","version":"v1.3.0","pid":1220}
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
  * Reloading nginx configuration nginx
    ...done.
-[2026-08-16T12:12:15Z] Post-switch health check through nginx: {"status":"ok","version":"v1.3.0","pid":11976}
+[2026-08-16T18:08:18Z] Post-switch health check through nginx: {"status":"ok","version":"v1.3.0","pid":1220}
 Switch complete: active=blue previous=green
-[2026-08-16T12:12:15Z] Rollback to blue complete — confirming health through proxy
-{"status":"ok","version":"v1.3.0","pid":11976}
-[2026-08-16T12:12:15Z] [MONITOR EXIT] Rollback confirmed, monitor exiting
+[2026-08-16T18:08:18Z] Rollback to blue complete — confirming health through proxy
+{"status":"ok","version":"v1.3.0","pid":1220}
+[2026-08-16T18:08:18Z] [MONITOR EXIT] Rollback confirmed, monitor exiting
 
 --- summary ---
-T0 (fault introduced): 2026-08-16T12:12:01Z
-T1 (ROLLBACK TRIGGERED): 2026-08-16T12:12:14Z
-T2 (rollback confirmed healthy via proxy, v1.3.0): 2026-08-16T12:12:15Z
-T0-to-T2 duration: 14 seconds (well under the 90-second requirement)
+T0 (fault introduced): 2026-08-16T18:08:05Z
+T1 (ROLLBACK TRIGGERED): 2026-08-16T18:08:17Z
+T2 (rollback confirmed healthy via proxy, v1.3.0): 2026-08-16T18:08:18Z
+T0-to-T2 duration: 13 seconds (well under the 90-second requirement)
 
 --- post-rollback state file verification ---
 blue

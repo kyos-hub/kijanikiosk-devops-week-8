@@ -31,6 +31,22 @@ while [ "$ELAPSED" -lt "$WINDOW_SECONDS" ]; do
   sleep "$POLL_INTERVAL"
   ELAPSED=$((ELAPSED + POLL_INTERVAL))
 
+  # Re-read the active environment each poll. This lets the monitor be started
+  # before a switch (per the pre-fault baseline requirement) and still track
+  # whichever environment becomes active, instead of locking onto whatever
+  # was active at MONITOR START.
+  NEW_ACTIVE_ENV="$(cat "$ACTIVE_FILE" 2>/dev/null || echo "$ACTIVE_ENV")"
+  if [ "$NEW_ACTIVE_ENV" != "$ACTIVE_ENV" ]; then
+    ACTIVE_ENV="$NEW_ACTIVE_ENV"
+    if [ "$ACTIVE_ENV" = "blue" ]; then
+      PORT=3000
+    else
+      PORT=3001
+    fi
+    echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] [MONITOR RETARGET] Active environment changed, now watching ${ACTIVE_ENV} on port ${PORT}"
+    CONSEC_FAILURES=0
+  fi
+
   if curl -s -f -m 3 "http://127.0.0.1:${PORT}/health" > /dev/null 2>&1; then
     if [ "$CONSEC_FAILURES" -gt 0 ]; then
       echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] [MONITOR OK] Health recovered after ${CONSEC_FAILURES} failure(s)"

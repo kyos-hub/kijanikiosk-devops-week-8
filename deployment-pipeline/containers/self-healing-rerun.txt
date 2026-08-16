@@ -7,8 +7,24 @@ kk-payments-6d4d8f97b9-lm8nc   1/1     Running   0          61s     10.244.0.5  
 T1 (check time): 2026-08-16T12:39:31Z
 
 --- summary ---
-T0 (pod kk-payments-6d4d8f97b9-8zmpx deleted): 2026-08-16T12:38:30Z
-New pod (kk-payments-6d4d8f97b9-lm8nc) reached Running: ~2026-08-16T12:38:30Z (age 61s at 12:39:31 check)
-Recovery time: replacement scheduled and running within seconds of deletion — Kubernetes
-replaced the deleted Pod automatically with no manual intervention.
-Pod name differs from all earlier evidence in this submission (fresh deployment, today's run).
+[NEEDS REGENERATION — see command below]
+T0 (pod deleted, from `kubectl delete pod ... ` output timestamp):
+T1 (replacement pod's own STATUS became Running, read directly from
+    `kubectl get pods -w` output at the moment it transitions, NOT
+    inferred from a later AGE column read):
+Recovery time (T1 - T0), computed in seconds:
+
+Capture this with a single watched command so T0 and T1 come from the
+same timeline instead of being reconstructed after the fact:
+
+  kubectl delete pod <old-pod-name> --wait=false && \
+  date -u +%Y-%m-%dT%H:%M:%SZ && \
+  kubectl get pods -l app=kk-payments -w
+
+Note the wall-clock time right after delete (T0), then note the wall-clock
+time the instant the new pod's STATUS column flips to Running (T1) in the
+watch output — don't derive T1 from the AGE column on a later poll, since
+AGE is only precise to the second it was last printed and produced a
+contradictory reading last time (T1 appeared identical to T0).
+
+Pod name must differ from all earlier evidence in this submission.
