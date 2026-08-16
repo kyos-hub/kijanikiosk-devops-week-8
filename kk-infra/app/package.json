@@ -1,0 +1,10 @@
+{
+  "name": "kk-payments",
+  "version": "1.4.0",
+  "description": "KijaniKiosk payments service (minimal demo app for blue/green + container pipeline)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "mkdir -p dist && cp server.js dist/server.js"
+  }
+}

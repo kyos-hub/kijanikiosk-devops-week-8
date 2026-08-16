@@ -1,0 +1,14 @@
+# kijanikiosk-active-env.conf
+# Managed by switch-env.sh — do not hand-edit while a switch is in progress.
+upstream kk_api_active {
+    server 127.0.0.1:3001;   # kk-api-green
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://kk_api_active;
+        proxy_set_header Host $host;
+    }
+}
