@@ -1,6 +1,6 @@
 # Demo Script — For Nia to Read Aloud
 
-> ⚠️ Fill in [ROLLBACK_TIME] with the exact duration from `rollback-evidence.txt` before this is finalized. It must match exactly.
+> ✅ Rollback duration confirmed: 14 seconds (from `rollback-evidence.txt`). Spoken text updated to use this exact value.
 
 ---
 
@@ -26,7 +26,7 @@
 
 **[Rollback completes]**
 
-"The system detected the problem and restored normal service in [ROLLBACK_TIME], faster than anyone in this room could have opened a laptop."
+"The system detected the problem and restored normal service in 14 seconds, faster than anyone in this room could have opened a laptop."
 
 **[Closing]**
 
