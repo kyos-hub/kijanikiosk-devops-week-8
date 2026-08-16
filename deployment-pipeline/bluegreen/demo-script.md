@@ -1,5 +1,7 @@
 # Demo Script — For Nia to Read Aloud
 
+
+
 ---
 
 **[Screen shows the current live site, version 1.3 in the corner]**
@@ -24,7 +26,7 @@
 
 **[Rollback completes]**
 
-"The system detected the problem and restored normal service in 14 seconds — faster than anyone in this room could have opened a laptop."
+
 
 **[Closing]**
 
