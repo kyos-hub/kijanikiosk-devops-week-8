@@ -1,18 +1,25 @@
-KijaniKiosk Production Deployment Pipeline (Week 8)
-Overview
+# KijaniKiosk Production Deployment Pipeline (Week 8)
 
-This project implements a complete Production Deployment Pipeline for the KijaniKiosk Payments Service. The goal is to demonstrate a reliable deployment strategy using Blue/Green deployments, automatic rollback, Docker containerization, and Kubernetes orchestration while providing evidence and documentation for each stage.
+## Overview
 
-The solution satisfies the Week 8 DevOps requirements by proving that deployments can be performed with minimal downtime, automatically recover from failures, and be deployed as scalable containers.
+This project demonstrates a complete production deployment pipeline for the KijaniKiosk Payments Service. It implements a Blue/Green deployment strategy with automatic rollback, Docker containerization, and Kubernetes deployment. The project emphasizes reliability, fault recovery, and production-ready deployment practices while providing evidence for each implementation stage.
 
-Objectives
-Implement Blue/Green deployment
-Automatically rollback failed deployments in under 90 seconds
-Containerize the application using Docker
-Deploy the application to Kubernetes
-Demonstrate Kubernetes self-healing
-Produce deployment evidence and operational documentation
-Repository Structure
+---
+
+## Objectives
+
+- Implement Blue/Green deployment.
+- Perform automatic rollback when deployment health checks fail.
+- Containerize the application using Docker.
+- Deploy the application to Kubernetes.
+- Demonstrate Kubernetes self-healing capabilities.
+- Document deployment evidence and operational procedures.
+
+---
+
+## Repository Structure
+
+```text
 deployment-pipeline/
 │
 ├── bluegreen/
@@ -34,150 +41,222 @@ deployment-pipeline/
 │   └── service-output.txt
 │
 └── comparison.md
-Technologies Used
-Docker
-Kubernetes (Minikube)
-Node.js
-Nginx
-Ubuntu Linux
-Bash
-Git & GitHub
-Blue/Green Deployment
+```
 
-The Blue/Green deployment pipeline provides zero-downtime releases by maintaining two production environments.
+---
 
-Workflow
-Deploy new version to Green
-Verify Green health
-Switch production traffic
-Monitor deployment
-Detect failures automatically
-Roll back to Blue if necessary
+## Technologies Used
 
-Evidence is provided in:
+- Docker
+- Kubernetes (Minikube)
+- Node.js
+- Nginx
+- Ubuntu Linux
+- Bash
+- Git
+- GitHub
 
-switch-cycle.log
-rollback-evidence.txt
-Automatic Rollback
+---
 
-The deployment monitor continuously checks the health of the active environment.
+## Blue/Green Deployment
 
-If multiple consecutive health checks fail:
+The application uses a Blue/Green deployment strategy to minimize downtime during releases.
 
-Production traffic is redirected to the previous environment
-Service availability is restored automatically
-No manual intervention is required
+### Deployment Workflow
 
-The rollback duration is recorded in:
+1. Deploy the new application version to the Green environment.
+2. Verify that the Green environment is healthy.
+3. Switch production traffic from Blue to Green.
+4. Continuously monitor application health.
+5. Automatically trigger rollback if failures are detected.
+6. Restore production traffic to the previous stable environment.
 
-deployment-pipeline/bluegreen/rollback-evidence.txt
-Docker Containerization
+Deployment evidence is available in:
+
+- `deployment-pipeline/bluegreen/switch-cycle.log`
+- `deployment-pipeline/bluegreen/rollback-evidence.txt`
+
+---
+
+## Automatic Rollback
+
+The deployment monitor continuously checks the health of the active deployment.
+
+If repeated health check failures occur:
+
+- Production traffic is redirected to the previous environment.
+- Service availability is restored automatically.
+- No manual intervention is required.
+
+Rollback evidence includes:
+
+- Rollback trigger
+- Environment switching
+- Health verification
+- Recovery time
+
+---
+
+## Docker Containerization
 
 The application is packaged using a production-ready multi-stage Docker build.
 
-Features include:
+### Features
 
-Multi-stage build
-Non-root execution (kijani user)
-HEALTHCHECK
-Production dependencies only
-Optimized image size
-Exec-form CMD
+- Multi-stage Docker build
+- Optimized production image
+- Non-root execution (`kijani` user)
+- HEALTHCHECK support
+- Production-only dependencies
+- Exec-form CMD
+- Optimized image size
 
-Build verification is available in:
+Build verification is documented in:
 
-deployment-pipeline/containers/build-verification.txt
-Kubernetes Deployment
+`deployment-pipeline/containers/build-verification.txt`
 
-The application is deployed as a Kubernetes Deployment with:
+---
 
-Two replicas
-Resource requests and limits
-ImagePullSecrets
-NodePort Service
-Automatic self-healing
+## Kubernetes Deployment
+
+The application is deployed to Kubernetes using a Deployment and a NodePort Service.
+
+### Deployment Features
+
+- Two application replicas
+- Resource requests and limits
+- ImagePullSecrets
+- Rolling deployment
+- Automatic restart
+- Self-healing
 
 Deployment manifests:
 
-kk-payments-deployment.yaml
-kk-payments-service.yaml
-Self-Healing Demonstration
+- `kk-payments-deployment.yaml`
+- `kk-payments-service.yaml`
 
-The project demonstrates Kubernetes self-healing by:
+---
 
-Deleting a running Pod
-Kubernetes automatically creating a replacement
-Recording recovery time
+## Self-Healing Demonstration
 
-Evidence is stored in:
+The project demonstrates Kubernetes self-healing by deleting a running Pod and allowing Kubernetes to automatically create a replacement.
 
-deployment-pipeline/containers/self-healing-rerun.txt
-Service Verification
+Evidence includes:
 
-The deployment was verified using:
+- Pod deletion
+- Replacement Pod creation
+- Recovery time
+- Successful application health verification
 
-Pod status
-Service endpoints
-Health endpoint
-NodePort access
-In-cluster DNS resolution
+Evidence file:
 
-Evidence:
+`deployment-pipeline/containers/self-healing-rerun.txt`
 
-deployment-pipeline/containers/service-output.txt
-Documentation
+---
 
-The project includes:
+## Service Verification
 
-Service Level Indicators (SLIs)
-Service Level Objectives (SLOs)
-Incident Review
-Blue/Green switch evidence
-Rollback evidence
-Kubernetes deployment evidence
-Executive comparison document
-Board presentation script
-Running the Project
-Build Docker Image
-docker build --no-cache -f deployment-pipeline/containers/Dockerfile.production -t kk-payments .
-Deploy to Kubernetes
+The deployed application was verified through:
+
+- Pod status
+- Service endpoints
+- NodePort connectivity
+- Health endpoint responses
+- Internal cluster DNS resolution
+
+Verification evidence:
+
+`deployment-pipeline/containers/service-output.txt`
+
+---
+
+## Documentation Included
+
+This repository includes the following documentation:
+
+- Blue/Green deployment evidence
+- Automatic rollback evidence
+- Service Level Indicators (SLIs)
+- Service Level Objectives (SLOs)
+- Incident review
+- Kubernetes deployment verification
+- Registry push verification
+- Build verification
+- Executive comparison report
+- Board presentation demo script
+
+---
+
+## Running the Project
+
+### Build the Docker Image
+
+```bash
+docker build --no-cache \
+-f deployment-pipeline/containers/Dockerfile.production \
+-t kk-payments .
+```
+
+### Deploy to Kubernetes
+
+```bash
 kubectl apply -f deployment-pipeline/containers/kk-payments-deployment.yaml
+
 kubectl apply -f deployment-pipeline/containers/kk-payments-service.yaml
-Verify Deployment
+```
+
+### Verify Deployment
+
+```bash
 kubectl get pods
+
 kubectl get svc
+
 kubectl get endpoints
-Project Deliverables
-✅ Blue/Green Deployment
-✅ Automatic Rollback
-✅ Production Docker Image
-✅ Kubernetes Deployment
-✅ Kubernetes Service
-✅ Registry Push Evidence
-✅ Build Verification
-✅ Self-Healing Demonstration
-✅ SLI/SLO Documentation
-✅ Incident Review
-✅ Executive Comparison
-✅ Board Demonstration Script
-Learning Outcomes
+```
 
-This project demonstrates practical experience with:
+---
 
-Production deployment strategies
-Blue/Green deployments
-Automated rollback
-Docker image optimization
-Kubernetes deployments
-Container orchestration
-Infrastructure reliability
-DevOps best practices
-Production monitoring
-Incident response
-Author
+## Project Deliverables
 
-Alan Kiptoo
+- Blue/Green Deployment
+- Automated Rollback
+- Production Docker Image
+- Kubernetes Deployment
+- Kubernetes Service
+- Registry Push Verification
+- Build Verification
+- Self-Healing Demonstration
+- SLI/SLO Documentation
+- Incident Review
+- Executive Comparison
+- Board Demonstration Script
 
-License
+---
 
-This project was developed for the KijaniKiosk DevOps Week 8 Independent Project and is intended for educational purposes.
+## Learning Outcomes
+
+This project demonstrates practical experience in:
+
+- Blue/Green deployment strategies
+- Automated rollback
+- Production deployment pipelines
+- Docker image optimization
+- Kubernetes deployment
+- Container orchestration
+- High availability
+- Fault recovery
+- Production monitoring
+- DevOps best practices
+
+---
+
+## Author
+
+**Alan Kiptoo**
+
+---
+
+## License
+
+This project was developed for educational purposes as part of the KijaniKiosk DevOps Week 8 Production Deployment Pipeline project.
