@@ -18,3 +18,17 @@ kijani
 Health status at 5s after start:  healthy
 Health status at 35s after start: healthy
 (Container reached healthy status well within 60 seconds of start)
+
+=== single-stage baseline build (for comparison.md) ===
+Dockerfile.baseline: FROM node:20, no multi-stage, no prune, npm install
+(includes devDependencies), full build tools left in final image.
+
+docker build --no-cache -f Dockerfile.baseline -t kk-payments:baseline .
+docker images kk-payments:baseline
+IMAGE                  ID             DISK USAGE   CONTENT SIZE
+kk-payments:baseline   3ae9322a0552       1.58GB          398MB
+
+Comparison:
+  Single-stage baseline: 398MB
+  Multi-stage production (kk-payments:test): 48.4MB
+  Reduction: 87.8%
